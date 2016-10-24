@@ -1,0 +1,75 @@
+---
+
+- hosts: all
+
+  vars:
+      ###
+      # Main Directories
+      ###
+      client: /vagrant/client
+      server: /vagrant/server
+
+      ###
+      # Node Directories
+      ###
+      node_modules_mountpoint: /vagrant/client/node_modules
+      node_modules_directory: /srv/client/node_modules
+
+  tasks:
+
+  - name: Install a few packages
+    yum: name={{item}}
+    with_items: 
+      - nodejs
+      - git
+      - httpd
+      - python-devel
+      - python-pip
+      - postgresql-server
+      - postgresql-contrib
+      - postgresql-devel
+      - gcc
+      - mod_wsgi
+      # - httpd-devel
+    sudo: yes
+
+  
+  - name: Initiate database
+    sudo: yes
+    command: service postgresql initdb
+            creates=/var/lib/pgsql/data/postgresql.conf
+
+  - name: Start PostgreSQL and enable at boot
+    sudo: yes
+    service: name=postgresql
+            enabled=yes
+            state=started
+
+  - lineinfile: dest=/var/lib/pgsql/data/pg_hba.conf
+               regexp='host\s+all\s+all\s+127.0.0.1/32\s+md5'
+               line='host all all 127.0.0.1/32 md5'
+               insertbefore=BOF
+    notify: restart postgresql
+    sudo: yes
+
+  - name: Create PostgreSQL User
+    shell: psql -c "ALTER USER postgres PASSWORD 'password';"
+    sudo: yes
+    sudo_user: postgres
+
+  handlers:
+
+  - name: restart postgresql
+    sudo: yes
+    service: name=postgresql state=restarted
+
+  - name: Pip Install
+    pip: requirements={{server}}requirements.txt
+    sudo: yes
+
+  - name: Copy keys
+    copy: src=/vagrant/provision/keys/{{item}} dest=/home/vagrant/.ssh/{{item}}
+    sudo: yes
+    with_items:
+      - id_rsa
+      - id_rsa.pub
