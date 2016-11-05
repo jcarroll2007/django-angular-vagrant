@@ -59,7 +59,7 @@ module.exports = function () {
     config.devServer = {
         contentBase: './src'
     };
-
+    config.watch = !isProd;
     config.resolve = {
         root: [
             path.resolve('./src'),

@@ -12,7 +12,8 @@ const stateConfig = ($stateProvider, $urlRouterProvider) => {
 
     const app = {
         abstract: true,
-        name: 'app'
+        name: 'app',
+        template: '<ui-view></ui-view>'
     };
 
     $stateProvider
