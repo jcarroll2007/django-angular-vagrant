@@ -6,8 +6,8 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
   config.vm.network "forwarded_port", guest: 80, host: 8080
 
-  config.ssh.insert_key = false
-  config.ssh.private_key_path = File.join(File.expand_path(File.dirname(__FILE__)), "provision/keys/id_rsa")
+  # config.ssh.insert_key = false
+  # config.ssh.private_key_path = File.join(File.expand_path(File.dirname(__FILE__)), "provision/keys/id_rsa")
 
   # Run Ansible from the Vagrant VM
   config.vm.provision "ansible_local" do |ansible|

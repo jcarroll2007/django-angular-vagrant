@@ -56,20 +56,18 @@
     shell: psql -c "ALTER USER postgres PASSWORD 'password';"
     sudo: yes
     sudo_user: postgres
+    
+
+  - name: Pip Install
+    pip: requirements={{server}}/requirements.txt executable=pip3.4
+    sudo: yes
+    
+  # - name: Copy Apache config
+  #   copy: src=django.conf dest=/etc/httpd/conf.d/django.conf
+  #   sudo: yes
 
   handlers:
 
   - name: restart postgresql
     sudo: yes
     service: name=postgresql state=restarted
-
-  - name: Pip Install
-    pip: requirements={{server}}requirements.txt
-    sudo: yes
-
-  - name: Copy keys
-    copy: src=/vagrant/provision/keys/{{item}} dest=/home/vagrant/.ssh/{{item}}
-    sudo: yes
-    with_items:
-      - id_rsa
-      - id_rsa.pub
