@@ -57,10 +57,15 @@
     sudo: yes
     sudo_user: postgres
     
-
   - name: Pip Install
     pip: requirements={{server}}/requirements.txt executable=pip3.4
     sudo: yes
+
+  - name: Copy Apache config
+    copy: src=django.conf dest=/etc/httpd/conf.d/django.conf
+    sudo: yes
+    notify: restart httpd
+
     
   # - name: Copy Apache config
   #   copy: src=django.conf dest=/etc/httpd/conf.d/django.conf
@@ -71,3 +76,7 @@
   - name: restart postgresql
     sudo: yes
     service: name=postgresql state=restarted
+
+  - name: restart httpd
+    sudo: yes
+    service: name=httpd state=restarted
