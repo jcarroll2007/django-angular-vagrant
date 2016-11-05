@@ -9,12 +9,22 @@ Vagrant.configure("2") do |config|
   # config.ssh.insert_key = false
   # config.ssh.private_key_path = File.join(File.expand_path(File.dirname(__FILE__)), "provision/keys/id_rsa")
 
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+
+      # Ensure python output is printed as execution occurs
+      export PYTHONUNBUFFERED=1
+
+      # Make mounted node modules directory and copy the package.json file over
+      sudo mkdir -p /srv/client/node_modules
+      sudo cp /vagrant/client/package.json /srv/frontend
+
+  SHELL
+
   # Run Ansible from the Vagrant VM
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "./provision/playbook.yml"
     ansible.verbose = true
   end
-
   
 
   # Disable automatic box update checking. If you disable this, then

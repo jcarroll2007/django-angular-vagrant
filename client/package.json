@@ -6,7 +6,8 @@
     "build": "webpack --bail --progress --profile -d",
     "develop": "webpack-dev-server -d --history-api-fallback --inline --progress --colors",
     "test": "karma start",
-    "create-component": "gulp component"
+    "create-component": "gulp component",
+    "create-view": "gulp view"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.8",

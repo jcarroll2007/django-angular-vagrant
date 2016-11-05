@@ -66,6 +66,17 @@
     sudo: yes
     notify: restart httpd
 
+  - name: Mount node modules mount point to fstab
+    mount:  src={{ node_modules_directory }}
+            name={{ node_modules_mountpoint }}
+            opts="bind"
+            fstype=none
+            state=mounted
+    sudo: yes
+
+  - name: Install Node modules
+    command: sudo npm install chdir={{client}}
+
     
   # - name: Copy Apache config
   #   copy: src=django.conf dest=/etc/httpd/conf.d/django.conf

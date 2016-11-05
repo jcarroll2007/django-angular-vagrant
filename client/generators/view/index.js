@@ -1,12 +1,12 @@
 import 'angular';
 import 'angular-ui-router';
 
-import config from './landing.config.js';
+import config from './<%= name %>.config.js';
 
-import './_landing.scss';
+import './_<%= name %>.scss';
 
 export default angular
-    .module('landing', [
+    .module('<%= moduleName %>', [
         'ui.router'
     ])
     .config(config)

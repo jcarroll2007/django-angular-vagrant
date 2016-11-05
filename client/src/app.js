@@ -1,7 +1,7 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 
-import Landing from './common/landing/landing';
+import Landing from './views/landing';
 
 const AppComponent = {
     template: '<div ui-view></div>'
@@ -12,8 +12,7 @@ const stateConfig = ($stateProvider, $urlRouterProvider) => {
 
     const app = {
         abstract: true,
-        name: 'app',
-        template: '<app></app>'
+        name: 'app'
     };
 
     $stateProvider

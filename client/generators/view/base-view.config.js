@@ -1,4 +1,4 @@
-import state from './landing.state.js';
+import state from './<%= name %>.state.js';
 
 export default ($stateProvider) => {
     $stateProvider
