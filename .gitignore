@@ -1,3 +1,5 @@
 .vagrant
 provision/playbook.retry
 client/dist/
+server/static/
+server/project/__pycache__/

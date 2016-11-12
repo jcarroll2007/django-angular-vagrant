@@ -25,8 +25,10 @@
       - httpd
       - python-devel
       - python-pip
+      - python34-devel.x86_64
       - postgresql-server
       - postgresql-contrib
+      - postgresql-libs
       - postgresql-devel
       - gcc
       - mod_wsgi
@@ -56,6 +58,12 @@
     shell: psql -c "ALTER USER postgres PASSWORD 'password';"
     sudo: yes
     sudo_user: postgres
+
+  - name: Create PostgreSQL Database
+    shell: createdb mydb
+    failed_when: False
+    sudo: yes
+    sudo_user: postgres
     
   - name: Pip Install
     pip: requirements={{server}}/requirements.txt executable=pip3.4
@@ -76,11 +84,6 @@
 
   - name: Install Node modules
     command: sudo npm install chdir={{client}}
-
-    
-  # - name: Copy Apache config
-  #   copy: src=django.conf dest=/etc/httpd/conf.d/django.conf
-  #   sudo: yes
 
   handlers:
 

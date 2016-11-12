@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "A simple webpack training module used to gain familiarity with writing npm scripts to build front end components.",
   "scripts": {
-    "build": "webpack --bail --progress --profile -d",
-    "develop": "webpack --bail --progress --profile -d",
+    "build": "webpack --progress --profile -d",
+    "develop": "webpack --progress --profile -d",
     "test": "karma start",
     "create-component": "gulp component",
     "create-view": "gulp view"
